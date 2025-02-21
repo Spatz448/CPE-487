@@ -1,4 +1,6 @@
-`--  https://electronicstopper.blogspot.com/2017/07/t-flip-flop-in-vhdl-with-testbench.html
+# Flip Flop and HA
+
+` --  https://electronicstopper.blogspot.com/2017/07/t-flip-flop-in-vhdl-with-testbench.html
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
@@ -70,60 +72,12 @@ BEGIN
 
   end process;
 
-END;
+END; `
 
-
---FOR REFERNECE
---entity adder_tb is
---end adder_tb;
-
---architecture behav of adder_tb is
-  --component adder
-    --port (i0, i1 : in bit; ci : in bit; s : out bit; co : out bit);
-  --end component;
---signal i : integer := 0;
-  --signal a, b, ci, s, co : bit_vector(3 downto 0);
---begin
-  --adder_0: adder port map (i0 => a(0), i1 => b(0), ci => ci(0), s => s(0), co => co(0));
-  --adder_1: adder port map (i0 => a(1), i1 => b(1), ci => co(0), s => s(1), co => co(1));
-  --adder_2: adder port map (i0 => a(2), i1 => b(2), ci => co(1), s => s(2), co => co(2));
-  --adder_3: adder port map (i0 => a(3), i1 => b(3), ci => co(2), s => s(3), co => co(3));
-
-  --process
-    --type pattern_type is record
-      --i0, i1, ci : bit;
-      --s, co : bit;
-    --end record;
-    --type pattern_array is array (natural range <>) of pattern_type;
-    --constant patterns : pattern_array :=
-      --(('0', '0', '0', '0', '0'),
-       --('0', '0', '1', '1', '0'),
-       --('0', '1', '0', '1', '0'),
-       --('0', '1', '1', '0', '1'),
-       --('1', '0', '0', '1', '0'),
-       --('1', '0', '1', '0', '1'),
-       --('1', '1', '0', '0', '1'),
-       --('1', '1', '1', '1', '1'));
-  --begin
-    --a(3 downto 0) <= "1111";
-    --for i in patterns'range loop
-      --a(0) <= patterns(i).i0;
-      --b(0) <= patterns(i).i1;
-      --ci(0) <= patterns(i).ci;
-      --wait for 1 ns;
-      --assert s(0) = patterns(i).s
-        --report "bad sum value" severity error;
-      --assert co(0) = patterns(i).co
-        --report "bad carry out value" severity error;
-    --end loop;
-    --assert false report "end of test" severity note;
-    --wait;
-
-  --end process;
---end behav;
-`
 --------------------------------------------------------------------------------------------------
-`--  https://electronicstopper.blogspot.com/2017/07/t-flip-flop-in-vhdl-with-testbench.html
+## T Flip Flop
+
+` --  https://electronicstopper.blogspot.com/2017/07/t-flip-flop-in-vhdl-with-testbench.html
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -153,9 +107,11 @@ Q<=not Q;
 end if;
 end process;
 
-end behavioral;
-`
+end behavioral;`
+
 --------------------------------------------------------------------------------------------------
+### Half Adder
+
 ~ -- Binary half adder (HA)
 -- Author: Nerdy Dave
 -- Source: https://youtu.be/H2GyAIYwZbw
