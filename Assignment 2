@@ -1,0 +1,180 @@
+`--  https://electronicstopper.blogspot.com/2017/07/t-flip-flop-in-vhdl-with-testbench.html
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY TFF_tb IS
+END TFF_tb;
+
+ARCHITECTURE behavior OF TFF_tb IS 
+
+    component ha
+        port( a, b : in std_logic; s, c: out std_logic);
+    end component;
+
+    COMPONENT TFF
+    PORT(
+         T : IN  std_logic;
+         clk : IN  std_logic;
+         rst : IN  std_logic;
+         Q : buffer  std_logic;
+         set : in std_logic
+        );
+    END COMPONENT;
+    
+   signal T : std_logic := '0';
+   signal clk : std_logic := '0';
+   signal rst : std_logic := '0';
+   signal set :std_logic;
+   signal Q : std_logic;
+   signal a : std_logic := T;
+   signal b : std_logic := clk;
+   
+   constant clk_period : time := 10 ns;
+
+BEGIN
+   uut: TFF PORT MAP (
+          T => T,
+          clk => clk,
+          rst => rst,
+          Q => Q,
+          set => set
+        );
+
+  clk_process : process
+  begin
+  clk <= '0';
+  wait for clk_period/2;
+  clk <= '1';
+  wait for clk_period/2;
+  if NOW > 200 ns then
+  wait;
+  end if;
+  end process;
+
+  stim_proc: process
+  begin  
+ 
+  rst <= '1';
+  wait for 50 ns; 
+
+  rst <= '0';
+  T <= '0';
+  wait for 50 ns;
+  
+  rst <= '0';
+  T <= '1';  
+  wait for 50 ns;
+
+  rst <= '1';
+  wait;
+
+  end process;
+
+END;
+
+
+--FOR REFERNECE
+--entity adder_tb is
+--end adder_tb;
+
+--architecture behav of adder_tb is
+  --component adder
+    --port (i0, i1 : in bit; ci : in bit; s : out bit; co : out bit);
+  --end component;
+--signal i : integer := 0;
+  --signal a, b, ci, s, co : bit_vector(3 downto 0);
+--begin
+  --adder_0: adder port map (i0 => a(0), i1 => b(0), ci => ci(0), s => s(0), co => co(0));
+  --adder_1: adder port map (i0 => a(1), i1 => b(1), ci => co(0), s => s(1), co => co(1));
+  --adder_2: adder port map (i0 => a(2), i1 => b(2), ci => co(1), s => s(2), co => co(2));
+  --adder_3: adder port map (i0 => a(3), i1 => b(3), ci => co(2), s => s(3), co => co(3));
+
+  --process
+    --type pattern_type is record
+      --i0, i1, ci : bit;
+      --s, co : bit;
+    --end record;
+    --type pattern_array is array (natural range <>) of pattern_type;
+    --constant patterns : pattern_array :=
+      --(('0', '0', '0', '0', '0'),
+       --('0', '0', '1', '1', '0'),
+       --('0', '1', '0', '1', '0'),
+       --('0', '1', '1', '0', '1'),
+       --('1', '0', '0', '1', '0'),
+       --('1', '0', '1', '0', '1'),
+       --('1', '1', '0', '0', '1'),
+       --('1', '1', '1', '1', '1'));
+  --begin
+    --a(3 downto 0) <= "1111";
+    --for i in patterns'range loop
+      --a(0) <= patterns(i).i0;
+      --b(0) <= patterns(i).i1;
+      --ci(0) <= patterns(i).ci;
+      --wait for 1 ns;
+      --assert s(0) = patterns(i).s
+        --report "bad sum value" severity error;
+      --assert co(0) = patterns(i).co
+        --report "bad carry out value" severity error;
+    --end loop;
+    --assert false report "end of test" severity note;
+    --wait;
+
+  --end process;
+--end behav;
+`
+--------------------------------------------------------------------------------------------------
+`--  https://electronicstopper.blogspot.com/2017/07/t-flip-flop-in-vhdl-with-testbench.html
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity TFF is
+port( T: in std_logic;
+clk: in std_logic;
+rst: in std_logic;
+set: in std_logic;
+Q: buffer std_logic);
+end TFF;
+
+architecture behavioral of TFF is
+begin
+process(rst,clk,T,set)
+begin
+
+if (rst='1' or set='0' or set='1') then
+if (set='0' or set='1') then
+Q<=set;
+elsif(rst='1') then
+Q<='0';
+end if;
+
+elsif(rising_edge(clk) and T='1') then
+Q<=not Q;
+
+end if;
+end process;
+
+end behavioral;
+`
+--------------------------------------------------------------------------------------------------
+~ -- Binary half adder (HA)
+-- Author: Nerdy Dave
+-- Source: https://youtu.be/H2GyAIYwZbw
+library ieee;               
+use ieee.std_logic_1164.all;
+
+entity ha is
+    port
+    (
+        a:  in  std_logic; 
+        b:  in  std_logic; 
+        s:  out std_logic; -- Output sum of a and b
+        c:  out std_logic  -- Output carry
+    );
+end ha;
+
+architecture behave of ha is
+begin
+    s <= a xor b;
+    c <= a and b;
+end behave;
+~
