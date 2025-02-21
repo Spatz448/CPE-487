@@ -1,3 +1,4 @@
+```vhdl library IEEE; use IEEE.STD_LOGIC_1164.ALL;
 # Flip Flop and HA
 
 ` --  https://electronicstopper.blogspot.com/2017/07/t-flip-flop-in-vhdl-with-testbench.html
